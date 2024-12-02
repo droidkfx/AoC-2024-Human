@@ -118,7 +118,7 @@ func getData(filename string) [][]int {
 
 	data := make([][]int, 0, 1000)
 	for input.Scan() {
-		line := strings.Split(input.Text(), " ")
+		line := strings.Fields(input.Text())
 		dataLine := make([]int, 0, len(line))
 		for i := 0; i < len(line); i++ {
 			res, err := strconv.Atoi(line[i])

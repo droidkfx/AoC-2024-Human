@@ -70,7 +70,7 @@ func getData(filename string) ([]int, []int) {
 
 	list1, list2 := make([]int, 0, 1000), make([]int, 0, 1000)
 	for input.Scan() {
-		data := strings.Split(input.Text(), "   ")
+		data := strings.Fields(input.Text())
 		if len(data) != 2 {
 			fmt.Println("can't parse:", data)
 			continue
