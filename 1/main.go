@@ -65,7 +65,9 @@ func getData(filename string) ([]int, []int) {
 	if err != nil {
 		panic(err)
 	}
-	defer f.Close()
+	defer func(f *os.File) {
+		_ = f.Close()
+	}(f)
 	input := bufio.NewScanner(f)
 
 	list1, list2 := make([]int, 0, 1000), make([]int, 0, 1000)
