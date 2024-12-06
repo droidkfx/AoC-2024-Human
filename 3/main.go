@@ -1,7 +1,7 @@
 package main
 
 import (
-	"adventofcode2024/pkg"
+	"adventofcode2024/pkg/helper"
 	"fmt"
 	"os"
 	"regexp"
@@ -47,7 +47,7 @@ func multiply(data string, enableMul bool) int {
 			}
 		case "mul":
 			if mulEnabled {
-				acc += pkg.MustAtoI(res[2]) * pkg.MustAtoI(res[3])
+				acc += helper.MustAtoI(res[2]) * helper.MustAtoI(res[3])
 			}
 		}
 
