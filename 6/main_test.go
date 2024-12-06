@@ -97,8 +97,47 @@ func Test_countGuardSpaces(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := countGuardSpaces(tt.args.guardMap, tt.args.guard); got != tt.want {
-				t.Errorf("countGuardSpaces() = %v, want %v", got, tt.want)
+			if got, loop := countGuardSpaces(tt.args.guardMap, tt.args.guard); got != tt.want || loop {
+				t.Errorf("countGuardSpaces() = %v, %v, want %v, false", got, loop, tt.want)
+			}
+		})
+	}
+}
+
+func Test_countPossibleLoops(t *testing.T) {
+	type args struct {
+		guardMap [][]bool
+		guard    guardPosition
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "example",
+			args: args{
+				guard: guardPosition{x: 4, y: 6, d: Dir_UP},
+				guardMap: [][]bool{
+					{false, false, false, false, true, false, false, false, false, false},
+					{false, false, false, false, false, false, false, false, false, true},
+					{false, false, false, false, false, false, false, false, false, false},
+					{false, false, true, false, false, false, false, false, false, false},
+					{false, false, false, false, false, false, false, true, false, false},
+					{false, false, false, false, false, false, false, false, false, false},
+					{false, true, false, false, false /* guard pos */, false, false, false, false, false},
+					{false, false, false, false, false, false, false, false, true, false},
+					{true, false, false, false, false, false, false, false, false, false},
+					{false, false, false, false, false, false, true, false, false, false},
+				},
+			},
+			want: 6,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := countPossibleLoops(tt.args.guardMap, tt.args.guard); got != tt.want {
+				t.Errorf("countPossibleLoops() = %v, want %v", got, tt.want)
 			}
 		})
 	}
