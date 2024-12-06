@@ -1,11 +1,17 @@
 package helper
 
-func SafeAccess(i, j int, data [][]byte) byte {
+func SafeAccess[T any](i, j int, data [][]T) T {
+	res, _ := SafeAccessOption(i, j, data)
+	return res
+}
+
+func SafeAccessOption[T any](i, j int, data [][]T) (T, bool) {
+	var zeroValue T
 	if i < 0 || i >= len(data) {
-		return 0
+		return zeroValue, false
 	}
 	if j < 0 || j >= len(data[i]) {
-		return 0
+		return zeroValue, false
 	}
-	return data[i][j]
+	return data[i][j], true
 }
