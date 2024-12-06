@@ -1,6 +1,7 @@
 package main
 
 import (
+	"adventofcode2024/pkg/helper"
 	"bufio"
 	"fmt"
 	"os"
@@ -48,11 +49,11 @@ func countXmasCross(i, j int, data [][]byte) int {
 	}
 
 	// cross top left -> bot right
-	if (safeAccess(i-1, j-1, data) == 'M' && safeAccess(i+1, j+1, data) == 'S') || // forward
-		(safeAccess(i-1, j-1, data) == 'S' && safeAccess(i+1, j+1, data) == 'M') { // backward
+	if (helper.SafeAccess(i-1, j-1, data) == 'M' && helper.SafeAccess(i+1, j+1, data) == 'S') || // forward
+		(helper.SafeAccess(i-1, j-1, data) == 'S' && helper.SafeAccess(i+1, j+1, data) == 'M') { // backward
 		// cross top right -> bot left
-		if (safeAccess(i-1, j+1, data) == 'M' && safeAccess(i+1, j-1, data) == 'S') || // forward
-			(safeAccess(i-1, j+1, data) == 'S' && safeAccess(i+1, j-1, data) == 'M') { // backward
+		if (helper.SafeAccess(i-1, j+1, data) == 'M' && helper.SafeAccess(i+1, j-1, data) == 'S') || // forward
+			(helper.SafeAccess(i-1, j+1, data) == 'S' && helper.SafeAccess(i+1, j-1, data) == 'M') { // backward
 			return 1
 		}
 	}
@@ -67,56 +68,46 @@ func countXmasInstance(i, j int, data [][]byte) int {
 	var acc int
 
 	// forward
-	if safeAccess(i, j+1, data) == 'M' && safeAccess(i, j+2, data) == 'A' && safeAccess(i, j+3, data) == 'S' {
+	if helper.SafeAccess(i, j+1, data) == 'M' && helper.SafeAccess(i, j+2, data) == 'A' && helper.SafeAccess(i, j+3, data) == 'S' {
 		acc++
 	}
 
 	// backward
-	if safeAccess(i, j-1, data) == 'M' && safeAccess(i, j-2, data) == 'A' && safeAccess(i, j-3, data) == 'S' {
+	if helper.SafeAccess(i, j-1, data) == 'M' && helper.SafeAccess(i, j-2, data) == 'A' && helper.SafeAccess(i, j-3, data) == 'S' {
 		acc++
 	}
 
 	// up
-	if safeAccess(i+1, j, data) == 'M' && safeAccess(i+2, j, data) == 'A' && safeAccess(i+3, j, data) == 'S' {
+	if helper.SafeAccess(i+1, j, data) == 'M' && helper.SafeAccess(i+2, j, data) == 'A' && helper.SafeAccess(i+3, j, data) == 'S' {
 		acc++
 	}
 
 	// down
-	if safeAccess(i-1, j, data) == 'M' && safeAccess(i-2, j, data) == 'A' && safeAccess(i-3, j, data) == 'S' {
+	if helper.SafeAccess(i-1, j, data) == 'M' && helper.SafeAccess(i-2, j, data) == 'A' && helper.SafeAccess(i-3, j, data) == 'S' {
 		acc++
 	}
 
 	// diag top left -> bottom right
-	if safeAccess(i+1, j+1, data) == 'M' && safeAccess(i+2, j+2, data) == 'A' && safeAccess(i+3, j+3, data) == 'S' {
+	if helper.SafeAccess(i+1, j+1, data) == 'M' && helper.SafeAccess(i+2, j+2, data) == 'A' && helper.SafeAccess(i+3, j+3, data) == 'S' {
 		acc++
 	}
 
 	// diag bottom right -> top left
-	if safeAccess(i-1, j-1, data) == 'M' && safeAccess(i-2, j-2, data) == 'A' && safeAccess(i-3, j-3, data) == 'S' {
+	if helper.SafeAccess(i-1, j-1, data) == 'M' && helper.SafeAccess(i-2, j-2, data) == 'A' && helper.SafeAccess(i-3, j-3, data) == 'S' {
 		acc++
 	}
 
 	// diag top right -> bottom left
-	if safeAccess(i+1, j-1, data) == 'M' && safeAccess(i+2, j-2, data) == 'A' && safeAccess(i+3, j-3, data) == 'S' {
+	if helper.SafeAccess(i+1, j-1, data) == 'M' && helper.SafeAccess(i+2, j-2, data) == 'A' && helper.SafeAccess(i+3, j-3, data) == 'S' {
 		acc++
 	}
 
 	// diag bottom left -> top right
-	if safeAccess(i-1, j+1, data) == 'M' && safeAccess(i-2, j+2, data) == 'A' && safeAccess(i-3, j+3, data) == 'S' {
+	if helper.SafeAccess(i-1, j+1, data) == 'M' && helper.SafeAccess(i-2, j+2, data) == 'A' && helper.SafeAccess(i-3, j+3, data) == 'S' {
 		acc++
 	}
 
 	return acc
-}
-
-func safeAccess(i, j int, data [][]byte) byte {
-	if i < 0 || i >= len(data) {
-		return 0
-	}
-	if j < 0 || j >= len(data[i]) {
-		return 0
-	}
-	return data[i][j]
 }
 
 func getData(filename string) [][]byte {
